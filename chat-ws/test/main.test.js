@@ -1,5 +1,12 @@
 const request = require('supertest');
 const express = require('express');
+jest.mock('../services/llmService', () => ({
+  getChatCompletion: jest.fn(async (msg) => {
+    if (!msg) throw new Error('Message is required');
+    if (msg === 'error') throw new Error('OpenAI API key not configured');
+    return 'Mocked LLM reply';
+  })
+}));
 const mainRouter = require('../routes/main');
 
 const app = express();
@@ -65,23 +72,41 @@ describe('Auth and Chat Routes', () => {
       token = res.body.token;
     });
     it('should deny access without token', async () => {
-      const res = await request(app).post('/chat');
+      const res = await request(app).post('/chat').send({ message: 'Hello' });
       expect(res.statusCode).toBe(401);
       expect(res.body.error).toBe('Unauthorized');
     });
     it('should deny access with invalid token', async () => {
       const res = await request(app)
         .post('/chat')
-        .set('Authorization', 'Bearer invalidtoken');
+        .set('Authorization', 'Bearer invalidtoken')
+        .send({ message: 'Hello' });
       expect(res.statusCode).toBe(401);
       expect(res.body.error).toBe('Invalid token');
     });
-    it('should allow access with valid token', async () => {
+    it('should return error if message is missing', async () => {
       const res = await request(app)
         .post('/chat')
-        .set('Authorization', `Bearer ${token}`);
+        .set('Authorization', `Bearer ${token}`)
+        .send({});
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toBe('Message is required');
+    });
+    it('should return error if llmService throws', async () => {
+      const res = await request(app)
+        .post('/chat')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ message: 'error' });
+      expect(res.statusCode).toBe(500);
+      expect(res.body.error).toBe('OpenAI API key not configured');
+    });
+    it('should allow access with valid token and return LLM reply', async () => {
+      const res = await request(app)
+        .post('/chat')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ message: 'Hello' });
       expect(res.statusCode).toBe(200);
-      expect(res.body.message).toContain('Hello, chatuser!');
+      expect(res.body.reply).toBe('Mocked LLM reply');
     });
   });
 });

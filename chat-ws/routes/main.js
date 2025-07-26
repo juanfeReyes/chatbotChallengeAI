@@ -44,8 +44,19 @@ function authenticateJWT(req, res, next) {
 }
 
 // Protected chat route
-router.post('/chat', authenticateJWT, (req, res) => {
-  res.json({ message: `Hello, ${req.user.username}! You have accessed the protected chat endpoint.` });
+const llmService = require('../services/llmService');
+
+router.post('/chat', authenticateJWT, async (req, res) => {
+  const { message } = req.body;
+  if (!message) {
+    return res.status(400).json({ error: 'Message is required' });
+  }
+  try {
+    const reply = await llmService.getChatCompletion(message);
+    res.json({ reply });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Example route

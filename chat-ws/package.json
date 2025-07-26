@@ -8,14 +8,16 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "node --env-file .env index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "openai": "^5.10.2"
   },
   "devDependencies": {
     "jest": "^30.0.5",
