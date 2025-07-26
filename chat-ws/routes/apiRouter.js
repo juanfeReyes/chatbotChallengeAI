@@ -59,6 +59,16 @@ router.post('/chat', authenticateJWT, async (req, res) => {
   }
 });
 
+// Healthcheck endpoint
+router.get('/healthcheck', (req, res) => {
+  const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+  if (!OPENAI_API_KEY) {
+    return res.status(500).json({ error: 'OpenAI not configured correctly' });
+  }
+
+  res.status(200).json({ status: 'OK' });
+});
+
 // Example route
 router.get('/', (req, res) => {
   res.send('Hello World from Express!');

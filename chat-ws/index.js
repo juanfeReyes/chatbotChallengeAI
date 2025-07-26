@@ -7,8 +7,8 @@ app.use(express.json());
 app.use(express.static('assets'));
 
 // Routes
-const mainRouter = require('./routes/main');
-app.use('/', mainRouter);
+const apiRouter = require('./routes/apiRouter');
+app.use('/api/v1', apiRouter);
 
 // Start server
 app.listen(PORT, () => {

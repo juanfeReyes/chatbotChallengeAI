@@ -7,7 +7,7 @@ jest.mock('../services/llmService', () => ({
     return 'Mocked LLM reply';
   })
 }));
-const mainRouter = require('../routes/main');
+const mainRouter = require('../routes/apiRouter');
 
 const app = express();
 app.use(express.json());
