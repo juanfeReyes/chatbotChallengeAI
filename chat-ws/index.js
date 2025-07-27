@@ -1,18 +1,33 @@
-const express = require('express');
+import express from 'express';
 const app = express();
 const PORT = process.env.CHATWS_PORT || 8080;
+import apiRouter from './routes/apiRouter.js';
+import { buildInMemoryVectorStore, buildQaChain } from './services/RagService.js';
+
+async function initApp() {
+  try {
+    console.info("Starting chat-ws server...");
+    await buildInMemoryVectorStore()
+    await buildQaChain();
+  } catch (error) {
+    console.error("Error initializing chat-ws server:", error);
+    // process.exit(1); // Exit the process with an error code
+  }
+}
 
 // Middleware
 app.use(express.json());
 app.use(express.static('assets'));
 
 // Routes
-const apiRouter = require('./routes/apiRouter');
 app.use('/api/v1', apiRouter);
 
-// Start server
-app.listen(PORT, () => {
-  console.info(`Server running on port ${PORT}`);
-});
+initApp().then(() => {
 
-console.info("Starting chat-ws server...");
+  // Start server
+  app.listen(PORT, () => {
+    console.info(`Server running on port ${PORT}`);
+  });
+})
+
+

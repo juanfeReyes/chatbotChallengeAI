@@ -1,5 +1,5 @@
-const request = require('supertest');
-const express = require('express');
+import request from 'supertest';
+import express from 'express';
 jest.mock('../services/llmService', () => ({
   getChatCompletion: jest.fn(async (msg) => {
     if (!msg) throw new Error('Message is required');
@@ -7,11 +7,11 @@ jest.mock('../services/llmService', () => ({
     return 'Mocked LLM reply';
   })
 }));
-const mainRouter = require('../routes/apiRouter');
+import apiRouter from '../routes/apiRouter';
 
 const app = express();
 app.use(express.json());
-app.use('/', mainRouter);
+app.use('/', apiRouter);
 
 describe('Auth and Chat Routes', () => {
   describe('POST /register', () => {

@@ -1,6 +1,8 @@
-const express = require('express');
+import * as  express from 'express';
+import * as authService from '../services/authService.js';
+import { getChatCompletion } from '../services/llmService.js';
+
 const router = express.Router();
-const authService = require('../services/authService');
 
 // Register route
 router.post('/register', (req, res) => {
@@ -44,15 +46,13 @@ function authenticateJWT(req, res, next) {
 }
 
 // Protected chat route
-const llmService = require('../services/llmService');
-
 router.post('/chat', authenticateJWT, async (req, res) => {
   const { message } = req.body;
   if (!message) {
     return res.status(400).json({ error: 'Message is required' });
   }
   try {
-    const reply = await llmService.getChatCompletion(message);
+    const reply = await getChatCompletion(message);
     res.json({ reply });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -74,4 +74,4 @@ router.get('/', (req, res) => {
   res.send('Hello World from Express!');
 });
 
-module.exports = router;
+export default router;

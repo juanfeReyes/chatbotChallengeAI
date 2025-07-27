@@ -1,11 +1,10 @@
-
 jest.mock('../services/llmService', () => ({
   getChatCompletion: jest.fn(async () => 'Mocked LLM reply')
 }));
 
-const request = require('supertest');
-const express = require('express');
-const apiRouter = require('../routes/apiRouter');
+import request from 'supertest';
+import express from 'express';
+import apiRouter from '../routes/apiRouter.js';
 
 describe('Healthcheck Endpoint', () => {
   let app;
