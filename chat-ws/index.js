@@ -23,6 +23,8 @@ app.use(express.static('assets'));
 
 // Routes
 app.use('/api/v1', apiRouter);
+const __dirname = process.cwd();
+app.use(express.static(__dirname+ '/src/infrastructure/pages/client'));
 
 initApp().then(() => {
 
