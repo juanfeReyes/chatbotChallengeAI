@@ -1,4 +1,4 @@
-import { getChatCompletion } from '../services/llmService';
+import { getChatCompletion } from '../src/application/chat/llmService.js';
 
 jest.mock('openai', () => {
   return {

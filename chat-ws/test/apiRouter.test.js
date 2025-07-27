@@ -1,13 +1,13 @@
 import request from 'supertest';
 import express from 'express';
-jest.mock('../services/llmService', () => ({
+jest.mock('../src/application/chat/llmService.js', () => ({
   getChatCompletion: jest.fn(async (msg) => {
     if (!msg) throw new Error('Message is required');
     if (msg === 'error') throw new Error('OpenAI API key not configured');
     return 'Mocked LLM reply';
   })
 }));
-import apiRouter from '../routes/apiRouter';
+import apiRouter from '../src/infrastructure/api/apiRouter.js';
 
 const app = express();
 app.use(express.json());

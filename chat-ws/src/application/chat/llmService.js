@@ -1,13 +1,9 @@
 import { OpenAI } from 'openai';
-import { HumanMessage } from '@langchain/core/messages';
-import { StateGraph, START, END, MemorySaver, MessagesAnnotation } from '@langchain/langgraph';
 import { v4 as uuidv4 } from 'uuid';
-import { ragChain } from './RagService.js';
+import { WorkflowApp } from '../rag/RagService.js';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
-
-// How to execute async code at startup
 
 
 // const GraphAnnotation = Annotation.Root({
@@ -20,31 +16,11 @@ const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 //   answer: Annotation(),
 // })
 
-async function callModel(state) {
-  const response = ragChain.invoke(state)
-  return {
-    chat_history: [
-      new HumanMessage(state.input),
-      new AIMessage(response.answer),
-    ],
-    context: response.context,
-    answer: response.answer,
-  }
-}
-
-const workflow = new StateGraph(MessagesAnnotation)
-  .addNode("model", callModel)
-  .addEdge(START, "model")
-  .addEdge("model", END);
-
-const memory = new MemorySaver();
-const app = workflow.compile({checkpointer: memory})
-
 export async function getChatCompletionWithContext(){
-  const threadId = uuidv4();
+  const threadId = uuidv4(); // how to handle this thread sessopm
   const config = { configurable: { thread_id: threadId } };
 
-  const result = await app.invoke(
+  const result = await (await WorkflowApp.getWorkflow()).invoke(
     {input: message},
     config
   );

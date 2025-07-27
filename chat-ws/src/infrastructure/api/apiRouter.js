@@ -1,6 +1,6 @@
 import * as  express from 'express';
-import * as authService from '../services/authService.js';
-import { getChatCompletion } from '../services/llmService.js';
+import * as authService from '../../application/auth/authService.js';
+import { getChatCompletion } from '../../application/chat/llmService.js';
 
 const router = express.Router();
 
