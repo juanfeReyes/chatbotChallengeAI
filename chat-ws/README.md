@@ -2,30 +2,21 @@
 
 A Node.js web service using the latest Express.js. 
 
-## Project Structure
-- `routes/` - Express route handlers
-- `services/` - Business logic and service modules
-- `assets/` - Static files
-- `test/` - Test files
-- `scripts/` - Utility scripts
+## Development scripts
 
-## Getting Started
+The current implementation uses react as framework to generate the static pages and the the chat-ws using express to serve all request. In order to get the app running you need:
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Start the server:
-   ```bash
-   node index.js
-   ```
-3. Visit [http://localhost:3000](http://localhost:3000) in your browser.
+- nodeJS 20.x or higher
+- git bash to run commands
+- .env file with secrets (ask a dev for the file)
 
-## Scripts
-- Add custom scripts to the `scripts/` folder.
+Please run the following commands to get the app in local environment:
+```sh
+npm run build
+npm run dev
+```
 
-## Testing
-- Place your test files in the `test/` folder.
+go to: localhost 8080.
 
 ---
 

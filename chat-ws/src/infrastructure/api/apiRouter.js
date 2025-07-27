@@ -59,7 +59,6 @@ router.post('/chat', authenticateJWT, async (req, res) => {
   }
 });
 
-// Healthcheck endpoint
 router.get('/healthcheck', (req, res) => {
   const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
   if (!OPENAI_API_KEY) {
@@ -75,3 +74,15 @@ router.get('/', (req, res) => {
 });
 
 export default router;
+
+// GET /products endpoint
+router.get('/products', (req, res) => {
+  const products = [
+    'Laptop',
+    'Smartphone',
+    'Headphones',
+    'Keyboard',
+    'Monitor'
+  ];
+  res.json(products);
+});
