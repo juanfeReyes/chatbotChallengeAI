@@ -4,3 +4,5 @@
 */.env
 
 */coverage/
+**/infrastructure/pages/client/
+**/build/client/
