@@ -13,7 +13,8 @@ export const EmbeddingModel = (function () {
         model = new OpenAIEmbeddings({
           model: EMBEDDING_MODEL_NAME,
           apiKey: OPENAI_API_KEY
-        });      }
+        });      
+      }
       return model;
     }
   }

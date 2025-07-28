@@ -6,25 +6,13 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
 
-// const GraphAnnotation = Annotation.Root({
-//   input: Annotation(),
-//   chat_history: Annotation({
-//     redurecer: messagesStateReducer,
-//     default: () => []
-//   }),
-//   context: Annotation(),
-//   answer: Annotation(),
-// })
-
-export async function getChatCompletionWithContext(){
+export async function getChatCompletionWithContext(message){
   const threadId = uuidv4(); // how to handle this thread sessopm
   const config = { configurable: { thread_id: threadId } };
+  const app = await WorkflowApp.getWorkflow()
 
-  const result = await (await WorkflowApp.getWorkflow()).invoke(
-    {input: message},
-    config
-  );
-  console.info(`response from model: ->`, result)
+  const inputs = {question: message}
+  const result = await app.invoke(inputs);
   return result.answer;
 }
 

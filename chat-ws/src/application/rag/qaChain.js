@@ -1,4 +1,9 @@
+import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts';
+import { ChatModel } from '../../infrastructure/models/chatmodel.js';
 import {VectorStore} from './vectorStore.js';
+import { createHistoryAwareRetriever } from 'langchain/chains/history_aware_retriever';
+import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
+import { createRetrievalChain } from 'langchain/chains/retrieval';
 
 export const QaChain = (function() {
 
@@ -15,7 +20,8 @@ export const QaChain = (function() {
 })();
 
 export async function buildQaChain(k = 5) {
-  const llm = chatModel
+  const llm = ChatModel.getModel();
+  
   const contextualizeQuestionSystemPromt = "You are a helpful and polite assistant"; // Make this configurable
   const promptWithContext = ChatPromptTemplate.fromMessages([
     ["system", contextualizeQuestionSystemPromt], //please update with the business context
@@ -51,6 +57,6 @@ export async function buildQaChain(k = 5) {
     retriever: historyRetriver,
     combineDocsChain: questionAnswerChain
   })
-  console.log("RAG Chain built successfully", ragChain);
+  console.log("RAG Chain built successfully");
   return chain;
 }

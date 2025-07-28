@@ -1,6 +1,6 @@
 import * as  express from 'express';
 import * as authService from '../../application/auth/authService.js';
-import { getChatCompletion } from '../../application/chat/llmService.js';
+import { getChatCompletion, getChatCompletionWithContext } from '../../application/chat/llmService.js';
 
 const router = express.Router();
 
@@ -52,9 +52,10 @@ router.post('/chat', authenticateJWT, async (req, res) => {
     return res.status(400).json({ error: 'Message is required' });
   }
   try {
-    const reply = await getChatCompletion(message);
+    const reply = await getChatCompletionWithContext(message);
     res.json({ reply });
   } catch (err) {
+    console.error('Error getting chat completion:', err);
     res.status(500).json({ error: err.message });
   }
 });
