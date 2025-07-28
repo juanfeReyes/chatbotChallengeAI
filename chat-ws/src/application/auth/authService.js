@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 
 const users = [];
 const SECRET = process.env.JWT_SECRET || 'supersecretkey';
@@ -15,7 +16,7 @@ export function authenticateUser(username, password) {
   const user = users.find(u => u.username === username && u.password === password);
   if (!user) return null;
   // Generate JWT
-  const token = jwt.sign({ username }, SECRET, { expiresIn: '1h' });
+  const token = jwt.sign({ username, chatToken: uuidv4() }, SECRET, { expiresIn: '1h' });
   return token;
 }
 

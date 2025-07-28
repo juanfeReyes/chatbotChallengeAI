@@ -1,53 +1,94 @@
-import { HumanMessage } from '@langchain/core/messages';
-import { StateGraph, START, END, MemorySaver, MessagesAnnotation, Annotation } from '@langchain/langgraph';
-import { QaChain } from "./qaChain.js";
+import { HumanMessage, ToolMessage, SystemMessage, AIMessage } from '@langchain/core/messages';
+import { StateGraph, MemorySaver, MessagesAnnotation, Annotation } from '@langchain/langgraph';
 import { pull } from 'langchain/hub';
-import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { VectorStore } from './vectorStore.js';
 import { ChatModel } from '../../infrastructure/models/chatmodel.js';
+import { tool } from '@langchain/core/tools';
+import { z } from "zod";
+import { ToolNode, toolsCondition } from "@langchain/langgraph/prebuilt";
 
-
-
-async function callModel(state) {
-  const response = await (await QaChain.getChain()).invoke(state);
-  return {
-    chat_history: [
-      new HumanMessage(state.input),
-      new AIMessage(response.answer),
-    ],
-    context: response.context,
-    answer: response.answer,
-  }
-}
 
 async function buildRagWorkflow() {
-  const promptTemplate = await pull('rlm/rag-prompt');
+  const retrieveSchema = z.object({ query: z.string() });
 
-  const retrieve = async (state) => {
-  const retrievedDocs = await (await VectorStore.getStore()).similaritySearch(state.question)
-  return { context: retrievedDocs };
-}
+  const retrieve = tool(async ({ query }) => {
+    const retrievedDocs = await (await VectorStore.getStore()).similaritySearch(query)
+    const serialized = retrievedDocs
+      .map(
+        (doc) => `Source: ${doc.metadata.source}\nContent: ${doc.pageContent}`
+      )
+      .join("\n");
+    return [serialized, retrievedDocs];
+  },
+    {
+      name: "retrieve",
+      description: "Retrieve relevant documents from the vector store based on the query.",
+      schema: retrieveSchema,
+      responseFormat: "content_and_artifact"
+    }
+  )
 
-const generate = async (state) => {
-  const docsContent = state.context.map(doc => doc.pageContent).join('\n');
-  const messages = await promptTemplate.invoke({question: state.question, context: docsContent});
-  const response = await (await ChatModel.getModel()).invoke(messages);
-  return { answer: response.content };
-}
- 
-  const StateAnnotation = Annotation.Root({
-    question: Annotation,
-    context: Annotation,
-    answer: Annotation
-  })
+  async function queryOrRespond(state) {
+    const llmWithTools = (await ChatModel.getModel()).bindTools([retrieve]);
+    const response = await llmWithTools.invoke(state.messages);
+    return { messages: [response] };
+  }
 
-  const graph = new StateGraph(StateAnnotation)
-  .addNode("retrieve", retrieve)
-  .addNode("generate", generate)
-  .addEdge("__start__", "retrieve")
-  .addEdge("retrieve", "generate")
-  .addEdge("generate", "__end__")
-  .compile();
+  const tools = new ToolNode([retrieve]);
+
+  const generate = async (state) => {
+    let recentToolMessages = [];
+    for (let i = state["messages"].length - 1; i >= 0; i--) {
+      let message = state["messages"][i];
+      if (message instanceof ToolMessage) {
+        recentToolMessages.push(message);
+      } else {
+        break;
+      }
+    }
+    let toolMessages = recentToolMessages.reverse();
+
+    // Format into prompt
+    const docsContent = toolMessages.map((doc) => doc.content).join("\n");
+    const systemMessageContent =
+      "You are an assistant for question-answering tasks. " +
+      "Use the following pieces of retrieved context to answer " +
+      "the question. If you don't know the answer, say that you " +
+      "don't know. Use three sentences maximum and keep the " +
+      "answer concise." +
+      "\n\n" +
+      `${docsContent}`;
+
+    const conversationMessages = state.messages.filter(
+      (message) =>
+        message instanceof HumanMessage ||
+        message instanceof SystemMessage ||
+        (message instanceof AIMessage && message.tool_calls.length == 0)
+    );
+    const prompt = [
+      new SystemMessage(systemMessageContent),
+      ...conversationMessages,
+    ];
+
+    // Run
+    const response = await (await ChatModel.getModel()).invoke(prompt);
+    return { messages: [response] };
+  }
+
+  const checkpointer = new MemorySaver();
+  const graph = new StateGraph(MessagesAnnotation)
+    .addNode("queryOrRespond", queryOrRespond)
+    .addNode("tools", tools)
+    .addNode("generate", generate)
+    .addEdge("__start__", "queryOrRespond")
+    .addConditionalEdges("queryOrRespond", toolsCondition, {
+      __end__: "__end__",
+      tools: "tools",
+    })
+    .addEdge("tools", "generate")
+    .addEdge("generate", "__end__")
+    .compile({checkpointer});
+
   return graph;
 }
 

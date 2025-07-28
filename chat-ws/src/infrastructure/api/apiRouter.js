@@ -48,11 +48,14 @@ function authenticateJWT(req, res, next) {
 // Protected chat route
 router.post('/chat', authenticateJWT, async (req, res) => {
   const { message } = req.body;
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  const payload = authService.verifyToken(token);
   if (!message) {
     return res.status(400).json({ error: 'Message is required' });
   }
   try {
-    const reply = await getChatCompletionWithContext(message);
+    const reply = await getChatCompletionWithContext(message, payload.chatToken);
     res.json({ reply });
   } catch (err) {
     console.error('Error getting chat completion:', err);

@@ -1,19 +1,25 @@
 import { OpenAI } from 'openai';
-import { v4 as uuidv4 } from 'uuid';
 import { WorkflowApp } from '../rag/RagService.js';
+import { isAIMessage } from "@langchain/core/messages";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
-
-export async function getChatCompletionWithContext(message){
-  const threadId = uuidv4(); // how to handle this thread sessopm
-  const config = { configurable: { thread_id: threadId } };
+export async function getChatCompletionWithContext(message, chatId){
   const app = await WorkflowApp.getWorkflow()
 
-  const inputs = {question: message}
-  const result = await app.invoke(inputs);
-  return result.answer;
+  const inputs = {messages: [{role: 'user', content: message}]};
+  const stream = await app.stream(inputs, {streamMode: 'values', configurable: { thread_id: chatId }});
+  const messages = [];
+  for await (const value of stream) {
+    const lastMessage = value.messages[value.messages.length - 1];
+    
+    if(isAIMessage(lastMessage)){
+      messages.push(lastMessage.content);
+    }
+  }
+
+  return messages[0]; // Return the last message content
 }
 
 export async function getChatCompletion(message) {
