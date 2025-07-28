@@ -23,7 +23,7 @@ async function buildInMemoryVectorStore() {
   const documents = await loadDocumentFromAssets('productsData.json');
   const splitDocs = await splitDocument(documents);
   const vectorStore = await storeEmbeddings(splitDocs);
-  console.log("In-memory vector store built successfully", vectorStore);
+  console.log("In-memory vector store built successfully");
   return vectorStore;
 };
 
