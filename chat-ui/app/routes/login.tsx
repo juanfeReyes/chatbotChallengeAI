@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import useLocalStorage from '~/hook/useLocalStorage';
+import api from '~/services/axiosInterceptor';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useLocalStorage<string>('token', '');
+  let navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add login logic here
-    alert(`Logging in as ${username}`);
+    
+    const loginResult = await api.post("/api/v1/login", {username, password})
+    setToken(loginResult.data.token)
+    navigate('/')
   };
 
   const handleClear = () => {
