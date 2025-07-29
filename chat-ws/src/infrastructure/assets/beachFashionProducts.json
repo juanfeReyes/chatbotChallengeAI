@@ -1,0 +1,296 @@
+[
+  {
+    "name": "Tropical Print Bikini",
+    "description": "A vibrant tropical print bikini set perfect for sunny beach days.",
+    "price": 39.99,
+    "quantityDiscount": "10% off for 3+",
+    "imageUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Boho Beach Cover-Up",
+    "description": "Lightweight bohemian style cover-up for a relaxed beach look.",
+    "price": 29.99,
+    "quantityDiscount": "15% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Straw Sun Hat",
+    "description": "Wide-brim straw hat to protect you from the sun in style.",
+    "price": 24.99,
+    "quantityDiscount": "5% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Sarong Wrap",
+    "description": "Multi-use sarong wrap, perfect for lounging or as a beach towel.",
+    "price": 19.99,
+    "quantityDiscount": "10% off for 3+",
+    "imageUrl": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Seashell Anklet",
+    "description": "Handmade anklet with real seashells for a boho beach vibe.",
+    "price": 12.99,
+    "quantityDiscount": "20% off for 5+",
+    "imageUrl": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Floral Beach Dress",
+    "description": "Flowy floral dress for effortless style on the sand.",
+    "price": 44.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1509233725247-49e657c54213?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Waterproof Beach Bag",
+    "description": "Spacious waterproof bag to keep your essentials dry.",
+    "price": 34.99,
+    "quantityDiscount": "15% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Ruffled Swimsuit",
+    "description": "One-piece swimsuit with ruffle details for a chic look.",
+    "price": 49.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://plus.unsplash.com/premium_photo-1663133679087-bc5deb50ab00?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Beach Flip Flops",
+    "description": "Comfortable flip flops designed for sandy strolls.",
+    "price": 14.99,
+    "quantityDiscount": "20% off for 4+",
+    "imageUrl": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Mesh Beach Tote",
+    "description": "Breathable mesh tote for carrying all your beach gear.",
+    "price": 22.99,
+    "quantityDiscount": "10% off for 3+",
+    "imageUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Tie-Dye Bikini",
+    "description": "Trendy tie-dye bikini set for a fun summer look.",
+    "price": 37.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Kimono",
+    "description": "Lightweight kimono for layering over swimwear.",
+    "price": 32.99,
+    "quantityDiscount": "15% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1509233725247-49e657c54213?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Shell Print Shorts",
+    "description": "Casual shell print shorts for beach adventures.",
+    "price": 21.99,
+    "quantityDiscount": "10% off for 3+",
+    "imageUrl": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Sandals",
+    "description": "Stylish sandals for comfort and fashion on the sand.",
+    "price": 18.99,
+    "quantityDiscount": "20% off for 4+",
+    "imageUrl": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Sun Protection Scarf",
+    "description": "UV protection scarf for extra coverage and style.",
+    "price": 16.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Maxi Skirt",
+    "description": "Flowy maxi skirt for a breezy beach look.",
+    "price": 27.99,
+    "quantityDiscount": "15% off for 2+",
+    "imageUrl": "https://plus.unsplash.com/premium_photo-1663133679087-bc5deb50ab00?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Palm Print Swimsuit",
+    "description": "One-piece swimsuit with palm print design.",
+    "price": 42.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Wrap Skirt",
+    "description": "Adjustable wrap skirt for versatile beach styling.",
+    "price": 23.99,
+    "quantityDiscount": "10% off for 3+",
+    "imageUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Shell Earrings",
+    "description": "Handcrafted shell earrings for a coastal touch.",
+    "price": 13.99,
+    "quantityDiscount": "20% off for 5+",
+    "imageUrl": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Tank Top",
+    "description": "Soft tank top with beachy graphics.",
+    "price": 17.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1509233725247-49e657c54213?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Woven Beach Bag",
+    "description": "Handwoven beach bag for carrying essentials.",
+    "price": 36.99,
+    "quantityDiscount": "15% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Romper",
+    "description": "Easy-to-wear romper for playful beach days.",
+    "price": 31.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://plus.unsplash.com/premium_photo-1663133679087-bc5deb50ab00?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Shell Necklace",
+    "description": "Beach-inspired shell necklace for a boho look.",
+    "price": 15.99,
+    "quantityDiscount": "20% off for 5+",
+    "imageUrl": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Shorts",
+    "description": "Lightweight shorts for comfort and style.",
+    "price": 20.99,
+    "quantityDiscount": "10% off for 3+",
+    "imageUrl": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Towel Dress",
+    "description": "Convertible towel dress for quick changes.",
+    "price": 28.99,
+    "quantityDiscount": "15% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Visor",
+    "description": "Adjustable visor for sun protection and style.",
+    "price": 11.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Slide Sandals",
+    "description": "Easy slip-on slide sandals for the beach.",
+    "price": 16.99,
+    "quantityDiscount": "20% off for 4+",
+    "imageUrl": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Wrap Dress",
+    "description": "Wrap dress for a flattering beach silhouette.",
+    "price": 38.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1509233725247-49e657c54213?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Beach Shell Bracelet",
+    "description": "Shell bracelet for a touch of ocean charm.",
+    "price": 14.99,
+    "quantityDiscount": "20% off for 5+",
+    "imageUrl": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Halter Top",
+    "description": "Halter top for a stylish beach outfit.",
+    "price": 18.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Straw Bag",
+    "description": "Straw bag for a classic beach accessory.",
+    "price": 27.99,
+    "quantityDiscount": "15% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Wrap Top",
+    "description": "Wrap top for versatile beach styling.",
+    "price": 22.99,
+    "quantityDiscount": "10% off for 3+",
+    "imageUrl": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Shell Hair Clip",
+    "description": "Shell hair clip for a cute beach hairstyle.",
+    "price": 9.99,
+    "quantityDiscount": "20% off for 5+",
+    "imageUrl": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Mesh Dress",
+    "description": "Mesh dress for a breezy beach look.",
+    "price": 33.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://plus.unsplash.com/premium_photo-1663133679087-bc5deb50ab00?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Beach Shell Ring",
+    "description": "Shell ring for a subtle beach accent.",
+    "price": 8.99,
+    "quantityDiscount": "20% off for 5+",
+    "imageUrl": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Wrap Pants",
+    "description": "Wrap pants for a relaxed beach style.",
+    "price": 26.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Shell Anklet",
+    "description": "Shell anklet for a boho beach vibe.",
+    "price": 11.99,
+    "quantityDiscount": "20% off for 5+",
+    "imageUrl": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Shell Tote",
+    "description": "Tote bag with shell accents for beach essentials.",
+    "price": 29.99,
+    "quantityDiscount": "15% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1509233725247-49e657c54213?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Beach Shell Dress",
+    "description": "Dress with shell details for a unique beach look.",
+    "price": 41.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://plus.unsplash.com/premium_photo-1663133679087-bc5deb50ab00?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Beach Shell Top",
+    "description": "Top with shell embellishments for a beachy style.",
+    "price": 19.99,
+    "quantityDiscount": "10% off for 3+",
+    "imageUrl": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Shell Shorts",
+    "description": "Shorts with shell prints for a playful beach look.",
+    "price": 23.99,
+    "quantityDiscount": "10% off for 3+",
+    "imageUrl": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Beach Shell Maxi Dress",
+    "description": "Maxi dress with shell motifs for a statement look.",
+    "price": 47.99,
+    "quantityDiscount": "10% off for 2+",
+    "imageUrl": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
+  }
+]

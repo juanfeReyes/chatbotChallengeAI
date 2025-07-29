@@ -1,6 +1,7 @@
 import * as  express from 'express';
 import * as authService from '../../application/auth/authService.js';
 import { getChatCompletion, getChatCompletionWithContext } from '../../application/chat/llmService.js';
+import productsList from '../assets/beachFashionProducts.json' with { type: 'json' };
 
 const router = express.Router();
 
@@ -81,12 +82,5 @@ export default router;
 
 // GET /products endpoint
 router.get('/products', (req, res) => {
-  const products = [
-    'Laptop',
-    'Smartphone',
-    'Headphones',
-    'Keyboard',
-    'Monitor'
-  ];
-  res.json(products);
+  res.json(productsList);
 });
