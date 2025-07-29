@@ -37,11 +37,21 @@ export default function Home() {
         <span className="font-semibold text-xl text-amber-600 p-6">
           Beach Fashion
         </span>
-        <Link
-          to='/login'
-          className="bg-yellow-400 text-black px-5 py-2 rounded-md no-underline font-medium text-base shadow-sm hover:bg-yellow-500 transition-colors mr-4">
-          Login
-        </Link>
+        {cookies.jwtToken ? (
+          <button
+            onClick={logout}
+            className="bg-orange-400 text-black px-5 py-2 rounded-md font-medium text-base shadow-sm hover:bg-orange-500 transition-colors mr-4"
+          >
+            Logout
+          </button>
+        ) : (
+          <Link
+            to="/login"
+            className="bg-yellow-400 text-black px-5 py-2 rounded-md no-underline font-medium text-base shadow-sm hover:bg-yellow-500 transition-colors mr-4"
+          >
+            Login
+          </Link>
+        )}
       </nav>
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-gray-600 mb-6 text-center text-2xl">
