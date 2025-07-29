@@ -12,7 +12,7 @@ async function buildRagWorkflow() {
   const retrieveSchema = z.object({ query: z.string() });
 
   const retrieve = tool(async ({ query }) => {
-    const retrievedDocs = await (await VectorStore.getStore()).similaritySearch(query)
+    const retrievedDocs = await (await VectorStore.getStore()).similaritySearch(query, 2)
     const serialized = retrievedDocs
       .map(
         (doc) => `Source: ${doc.metadata.source}\nContent: ${doc.pageContent}`
@@ -22,14 +22,16 @@ async function buildRagWorkflow() {
   },
     {
       name: "retrieve",
-      description: "Retrieve relevant documents from the vector store based on the query.",
+      description: "Retrieve information related to a query.",
       schema: retrieveSchema,
-      responseFormat: "content_and_artifact"
+      responseFormat: "content_and_artifact",
+      verbose: true
     }
   )
 
   async function queryOrRespond(state) {
-    const llmWithTools = (await ChatModel.getModel()).bindTools([retrieve]);
+    const llm = await ChatModel.getModel();
+    const llmWithTools = llm.bindTools([retrieve]);
     const response = await llmWithTools.invoke(state.messages);
     return { messages: [response] };
   }
@@ -69,9 +71,10 @@ async function buildRagWorkflow() {
       new SystemMessage(systemMessageContent),
       ...conversationMessages,
     ];
-
+  
     // Run
-    const response = await (await ChatModel.getModel()).invoke(prompt);
+    const llm = await ChatModel.getModel()
+    const response = await llm.invoke(prompt);
     return { messages: [response] };
   }
 

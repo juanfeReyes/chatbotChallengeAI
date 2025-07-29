@@ -18,8 +18,8 @@ export async function getChatCompletionWithContext(message, chatId){
       messages.push(lastMessage.content);
     }
   }
-
-  return messages[0]; // Return the last message content
+  console.debug("Final messages:", messages);
+  return messages[messages.length - 1]; // Return the last message content
 }
 
 export async function getChatCompletion(message) {
