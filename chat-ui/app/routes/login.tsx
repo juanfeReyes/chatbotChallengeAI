@@ -38,7 +38,7 @@ const Login: React.FC = () => {
                 required
                 style={{
                   width: '100%',
-                  padding: '0.7rem',
+                  padding: '0.7rem 0.7rem 0.7rem 0.2rem',
                   marginTop: '0.5rem',
                   borderRadius: '8px',
                   border: '1px solid #b3d8ff',
@@ -58,7 +58,7 @@ const Login: React.FC = () => {
                 required
                 style={{
                   width: '100%',
-                  padding: '0.7rem',
+                  padding: '0.7rem 0.7rem 0.7rem 0.2rem',
                   marginTop: '0.5rem',
                   borderRadius: '8px',
                   border: '1px solid #b3d8ff',
