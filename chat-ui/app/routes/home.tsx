@@ -11,9 +11,28 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const [isValidToken, setIsValidToken] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(['jwtToken'])
   let navigate = useNavigate();
-  console.log(cookies)
+
+  // Verify token when component mounts or cookie changes
+  useEffect(() => {
+    if (cookies.jwtToken) {
+      api.get("/api/v1/verify-token")
+        .then(response => {
+          setIsValidToken(true);
+        })
+        .catch(error => {
+          console.error('Token verification failed:', error);
+          setIsValidToken(false);
+          removeCookie('jwtToken');
+        });
+    } else {
+      setIsValidToken(false);
+    }
+  }, [cookies.jwtToken, removeCookie]);
+
+  // Fetch products
   useEffect(() => {
     api.get("/api/v1/products")
       .then(res => {
@@ -37,7 +56,7 @@ export default function Home() {
         <span className="font-semibold text-xl text-amber-600 p-6">
           Beach Fashion
         </span>
-        {cookies.jwtToken ? (
+        {isValidToken ? (
           <button
             onClick={logout}
             className="bg-orange-400 text-black px-5 py-2 rounded-md font-medium text-base shadow-sm hover:bg-orange-500 transition-colors mr-4"
@@ -72,7 +91,7 @@ export default function Home() {
         </div>
       </div>
 
-      {(
+      {isValidToken && (
         <>
           <ChatModal
             isOpen={isChatOpen}
