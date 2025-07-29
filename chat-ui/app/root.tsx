@@ -10,6 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import { ToastContainer, toast } from 'react-toastify';
 import "./app.css"; //TODO: work on styling later
+import { CookiesProvider } from "react-cookie";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -43,10 +44,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <>
+  return <CookiesProvider>
     <ToastContainer />
     <Outlet />
-  </>
+  </CookiesProvider>
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

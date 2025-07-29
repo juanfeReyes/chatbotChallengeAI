@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { useCookies } from "react-cookie";
+import { Link, useNavigate } from "react-router";
 import ProductItem from "~/components/productItem";
 import api from "~/services/axiosInterceptor";
 
@@ -7,7 +8,9 @@ export default function Home() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [cookies, setCookie, removeCookie] = useCookies(['jwtToken'])
+  let navigate = useNavigate();
+  console.log(cookies)
   useEffect(() => {
     api.get("/api/v1/products")
       .then(res => {
@@ -19,6 +22,11 @@ export default function Home() {
         setLoading(false);
       });
   }, []);
+
+  const logout = () => {
+    removeCookie('jwtToken')
+    navigate('/')
+  }
 
   return (
     <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)" }}>
@@ -34,22 +42,37 @@ export default function Home() {
         }}
       >
         <span style={{ fontWeight: 600, fontSize: "1.3rem", color: "#ce9504ff", padding: "1.5rem" }}>Beach Fashion</span>
-        <Link
-          to="/login"
-          style={{
-            color: "#000",
-            background: "#fbc02d",
-            padding: "0.5rem 1.2rem",
-            borderRadius: "6px",
-            textDecoration: "none",
-            fontWeight: 500,
-            fontSize: "1rem",
-            boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-            marginRight: "1rem"
-          }}
-        >
-          Login
-        </Link>
+        {cookies.jwtToken ?
+          <button
+            onClick={logout}
+            style={{
+              color: "#000",
+              background: "#FF8E29",
+              padding: "0.5rem 1.2rem",
+              borderRadius: "6px",
+              textDecoration: "none",
+              fontWeight: 500,
+              fontSize: "1rem",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+              marginRight: "1rem"
+            }}>Logout</button> :
+            <Link
+            to="/login"
+            style={{
+              color: "#000",
+              background: "#fbc02d",
+              padding: "0.5rem 1.2rem",
+              borderRadius: "6px",
+              textDecoration: "none",
+              fontWeight: 500,
+              fontSize: "1rem",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+              marginRight: "1rem"
+            }}
+          >
+            Login
+          </Link>
+        }
       </nav>
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 1rem" }}>
         <h2 style={{ color: "#616161", marginBottom: "1.5rem", textAlign: "center" }}>Products</h2>

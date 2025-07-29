@@ -27,7 +27,7 @@ router.post('/login', (req, res) => {
     return res.status(400).json({ error: 'Username and password are required' });
   }
   const token = authService.authenticateUser(username, password);
-  res.cookie('jwtToken', token, {httpOnly: true})
+  res.cookie('jwtToken', token)
   if (!token) {
     return res.status(400).json({ error: 'Invalid login' });
   }
@@ -109,7 +109,7 @@ router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login', session: false }),
   function (req, res) {
     const token = authService.authenticateUser(req.user.emails[0].value, 'test');
-    res.cookie('jwtToken', token, {httpOnly: true})
+    res.cookie('jwtToken', token)
     res.redirect('/');
   });
 
