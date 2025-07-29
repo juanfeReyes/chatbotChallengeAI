@@ -4,7 +4,6 @@ import { getChatCompletion, getChatCompletionWithContext } from '../../applicati
 import productsList from '../assets/beachFashionProducts.json' with { type: 'json' };
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from 'passport';
-import * as cookie from 'cookie'
 
 const router = express.Router();
 
@@ -28,8 +27,7 @@ router.post('/login', (req, res) => {
     return res.status(400).json({ error: 'Username and password are required' });
   }
   const token = authService.authenticateUser(username, password);
-  const cookieString = cookie.serialize('jwtToken', token, { httpOnly: true })
-  res.setHeader('Set-Cookie', cookieString)
+  res.cookie('jwtToken', token, {httpOnly: true})
   if (!token) {
     return res.status(400).json({ error: 'Invalid login' });
   }
@@ -111,8 +109,7 @@ router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login', session: false }),
   function (req, res) {
     const token = authService.authenticateUser(req.user.emails[0].value, '');
-    const cookieString = cookie.serialize('jwtToken', token, { httpOnly: true })
-    res.setHeader('Set-Cookie', cookieString)
+    res.cookie('jwtToken', token, {httpOnly: true})
     res.redirect('/');
   });
 
