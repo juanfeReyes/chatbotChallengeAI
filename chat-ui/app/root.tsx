@@ -9,7 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import { ToastContainer, toast } from 'react-toastify';
-// import "./app.css"; //TODO: work on styling later
+import "./app.css"; //TODO: work on styling later
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

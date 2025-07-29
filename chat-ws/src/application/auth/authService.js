@@ -12,11 +12,17 @@ export function registerUser(username, password) {
   return { success: true };
 }
 
+export const generateToken = (username) => {
+  const chatToken = uuidv4();
+  const token = jwt.sign({ username, chatToken }, SECRET, { expiresIn: '1h' });
+  return token;
+}
+
 export function authenticateUser(username, password) {
   const user = users.find(u => u.username === username && u.password === password);
   if (!user) return null;
   // Generate JWT
-  const token = jwt.sign({ username, chatToken: uuidv4() }, SECRET, { expiresIn: '1h' });
+  const token = generateToken(username)
   return token;
 }
 

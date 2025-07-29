@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaGoogle } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
 import useLocalStorage from '~/hook/useLocalStorage';
 import api from '~/services/axiosInterceptor';
@@ -76,6 +77,13 @@ const Login: React.FC = () => {
           </form>
           <div style={{ marginTop: '2rem', textAlign: 'center' }}>
             <a href="/login/register" style={{ color: '#1976d2', textDecoration: 'underline', fontWeight: 500 }}>Do not have account yet? Register now!</a>
+          </div>
+          <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+            <a href="/api/v1/auth/google" style={{ color: '#1976d2', textDecoration: 'underline', fontWeight: 500 }}>
+              <div className='flex gap-2 items-center'>
+                <FaGoogle /> Login with Google
+              </div>
+            </a>
           </div>
         </div>
       </div>
