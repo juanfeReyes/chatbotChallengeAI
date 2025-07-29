@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-import axios from "axios";
 import ProductItem from "~/components/productItem";
+import api from "~/services/axiosInterceptor";
 
 export default function Home() {
   const [items, setItems] = useState<any[]>([]);
@@ -9,7 +9,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios.get("/api/v1/products")
+    api.get("/api/v1/products")
       .then(res => {
         setItems(res.data);
         setLoading(false);

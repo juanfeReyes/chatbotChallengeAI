@@ -20,7 +20,7 @@ api.interceptors.response.use(
       // Something else happened
       console.error('Error', error.message);
     }
-    toast.error(error.response.data.error )
+    toast.error(error.response.data.error)
     return Promise.reject(error);
   }
 );

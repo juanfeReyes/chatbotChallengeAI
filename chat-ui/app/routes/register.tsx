@@ -79,7 +79,7 @@ const Register: React.FC = () => {
               />
               <span
                 onClick={() => setShowPassword((v) => !v)}
-                style={{ position: 'absolute', right: -5, top: 38, cursor: 'pointer', color: '#1976d2', fontSize: '1.2rem' }}
+                style={{ position: 'absolute', right: 15, top: 45, cursor: 'pointer', color: '#1976d2', fontSize: '1.2rem' }}
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -106,7 +106,7 @@ const Register: React.FC = () => {
               />
               <span
                 onClick={() => setShowConfirmPassword((v) => !v)}
-                style={{ position: 'absolute', right: -5, top: 38, cursor: 'pointer', color: '#d4a200', fontSize: '1.2rem' }}
+                style={{ position: 'absolute', right: 15, top: 45, cursor: 'pointer', color: '#d4a200', fontSize: '1.2rem' }}
                 aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
               >
                 {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
