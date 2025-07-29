@@ -108,7 +108,7 @@ router.get('/auth/google',
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login', session: false }),
   function (req, res) {
-    const token = authService.authenticateUser(req.user.emails[0].value, '');
+    const token = authService.authenticateUser(req.user.emails[0].value, 'test');
     res.cookie('jwtToken', token, {httpOnly: true})
     res.redirect('/');
   });
