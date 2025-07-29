@@ -31,6 +31,7 @@ router.post('/login', (req, res) => {
   res.json({ token });
 });
 
+
 // Middleware to protect routes
 function authenticateJWT(req, res, next) {
   const authHeader = req.headers['authorization'];
