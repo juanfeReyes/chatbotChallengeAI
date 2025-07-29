@@ -49,6 +49,10 @@ function authenticateJWT(req, res, next) {
   next();
 }
 
+router.get('/verify-token', authenticateJWT, (req, res) => {
+  res.json({ valid: true });
+});
+
 // Protected chat route
 router.post('/chat', authenticateJWT, async (req, res) => {
   const { message } = req.body;
