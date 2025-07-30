@@ -1,4 +1,4 @@
-import {useState, type FC} from "react"
+import {useState, useRef, useEffect, type FC} from "react"
 import useLocalStorage from "../hook/useLocalStorage"
 import axios from "axios"
 
@@ -18,11 +18,17 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
   const [messages, setMessages] = useLocalStorage<Message[]>("chat-messages", [])
   const [inputMessage, setInputMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [token] = useLocalStorage<string>("token", "")
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const addMessage = (newMessage: Message) => {
-    setMessages([...messages, newMessage])
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
+
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return
@@ -34,7 +40,7 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
       timestamp: new Date().toLocaleTimeString()
     }
 
-    addMessage(userMessage)
+    setMessages((prevMessages: Message[]) => [...prevMessages, userMessage])
     setInputMessage("")
     setIsLoading(true)
 
@@ -42,11 +48,6 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
       const response = await axios.post(
         "/api/v1/chat",
         { message: inputMessage },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
       )
 
       const aiMessage: Message = {
@@ -56,7 +57,7 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
         timestamp: new Date().toLocaleTimeString()
       }
 
-      addMessage(aiMessage)
+      setMessages(prevMessages => [...prevMessages, aiMessage])
     } catch (error) {
       console.error("Chat error:", error)
       const errorMessage: Message = {
@@ -65,7 +66,7 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
         isUser: false,
         timestamp: new Date().toLocaleTimeString()
       }
-      addMessage(errorMessage)
+      setMessages(prevMessages => [...prevMessages, errorMessage])
     } finally {
       setIsLoading(false)
     }
@@ -117,18 +118,18 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
                   {message.timestamp}
                 </span>
               </div>
+              <div ref={messagesEndRef} />
             </div>
           ))}
         </div>
 
-        {/* Input */}
         <div className='border-t p-4'>
           <div className='flex space-x-2'>
             <input
               type='text'
               value={inputMessage}
               onChange={e => setInputMessage(e.target.value)}
-              onKeyPress={e => e.key === "Enter" && handleSendMessage()}
+              onKeyDown={e => e.key === "Enter" && handleSendMessage()}
               placeholder={isLoading ? 'AI is typing...' : 'Type your message...'}
               disabled={isLoading}
               className='flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50 disabled:text-gray-500'
@@ -136,8 +137,14 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
             <button
               onClick={handleSendMessage}
               disabled={isLoading}
-              className='bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed'>
-              {isLoading ? 'Sending...' : 'Send'}
+              className='bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed min-w-[80px] flex items-center justify-center'>
+              {isLoading ? (
+                <div className="flex space-x-1">
+                  <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{ animationDelay: '300ms' }}></div>
+                  <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{ animationDelay: '600ms' }}></div>
+                </div>
+              ) : 'Send'}
             </button>
           </div>
         </div>
