@@ -7,15 +7,13 @@ import api from '~/services/axiosInterceptor';
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useLocalStorage<string>('token', '');
   let navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const loginResult = await api.post("/api/v1/login", { username, password })
-    setToken(loginResult.data.token)
-    navigate('/')
+    await api.post("/api/v1/auth/login", { username, password })
+    navigate("/")
   };
 
   const handleClear = () => {
