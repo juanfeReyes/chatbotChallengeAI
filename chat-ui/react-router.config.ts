@@ -5,6 +5,6 @@ export default {
   // Server-side render by default, to enable SPA mode set this to `false`
   ssr: false,
   async prerender(args) {
-    return ["/", 'login', 'login/register']
+    return ["/", 'login', 'register']
   },
 } satisfies Config;

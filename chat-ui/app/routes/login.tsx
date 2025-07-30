@@ -24,63 +24,43 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%)', position: 'relative' }} >
-      <a href="/" style={{ position: 'absolute', top: 24, left: 24, color: '#1976d2', textDecoration: 'underline', fontWeight: 500, fontSize: '1rem', zIndex: 2 }}>Home</a>
-      <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: '2.5rem 2rem', width: '100%', maxWidth: 350, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <h2 style={{ textAlign: 'center', color: '#1976d2', marginBottom: '2rem', fontWeight: 700, letterSpacing: 1 }}>Login</h2>
-          <form onSubmit={handleLogin} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-            <label style={{ fontWeight: 500, color: '#1976d2' }}>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 relative">
+      <a href="/" className="absolute top-6 left-6 text-blue-600 underline font-medium text-base z-10">Home</a>
+      <div className="h-screen flex items-center justify-center">
+        <div className="bg-white rounded-2xl shadow-lg p-10 w-full max-w-[350px] flex flex-col items-center">
+          <h2 className="text-center text-blue-600 mb-8 font-bold tracking-wide">Login</h2>
+          <form onSubmit={handleLogin} className="w-full flex flex-col gap-5">
+            <label className="font-medium text-blue-600">
               Username
               <input
                 type="text"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '0.7rem 0.7rem 0.7rem 0.2rem',
-                  marginTop: '0.5rem',
-                  borderRadius: '8px',
-                  border: '1px solid #b3d8ff',
-                  outline: 'none',
-                  fontSize: '1rem',
-                  background: '#f5faff',
-                  color: '#1976d2'
-                }}
+                className="w-full px-3 py-3 mt-2 rounded-lg border border-blue-200 outline-none text-base bg-blue-50 text-blue-600 focus:ring-2 focus:ring-blue-500"
               />
             </label>
-            <label style={{ fontWeight: 500, color: '#1976d2' }}>
+            <label className="font-medium text-blue-600">
               Password
               <input
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '0.7rem 0.7rem 0.7rem 0.2rem',
-                  marginTop: '0.5rem',
-                  borderRadius: '8px',
-                  border: '1px solid #b3d8ff',
-                  outline: 'none',
-                  fontSize: '1rem',
-                  background: '#f5faff',
-                  color: '#1976d2'
-                }}
+                className="w-full px-3 py-3 mt-2 rounded-lg border border-blue-200 outline-none text-base bg-blue-50 text-blue-600 focus:ring-2 focus:ring-blue-500"
               />
             </label>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '0.5rem' }}>
-              <button type="submit" style={{ background: '#1976d2', color: '#fff', border: 'none', borderRadius: '8px', padding: '0.7rem 1.5rem', fontWeight: 600, cursor: 'pointer', boxShadow: '0 2px 8px rgba(25,118,210,0.08)' }}>Login</button>
-              <button type="button" onClick={handleClear} style={{ background: '#e3f0ff', color: '#1976d2', border: 'none', borderRadius: '8px', padding: '0.7rem 1.5rem', fontWeight: 600, cursor: 'pointer' }}>Clear</button>
+            <div className="flex gap-4 justify-center mt-2">
+              <button type="submit" className="bg-blue-600 text-white rounded-lg px-6 py-3 font-semibold cursor-pointer shadow-md shadow-blue-200 hover:bg-blue-700 transition-colors">Login</button>
+              <button type="button" onClick={handleClear} className="bg-blue-50 text-blue-600 rounded-lg px-6 py-3 font-semibold cursor-pointer hover:bg-blue-100 transition-colors">Clear</button>
             </div>
           </form>
-          <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-            <a href="/login/register" style={{ color: '#1976d2', textDecoration: 'underline', fontWeight: 500 }}>Do not have account yet? Register now!</a>
+          <div className="mt-8 text-center">
+            <a href="/register" className="text-blue-600 underline font-medium hover:text-blue-700">Do not have account yet? Register now!</a>
           </div>
-          <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-            <a href="/api/v1/auth/google" style={{ color: '#1976d2', textDecoration: 'underline', fontWeight: 500 }}>
-              <div className='flex gap-2 items-center'>
+          <div className="mt-8 text-center">
+            <a href="/api/v1/auth/google" className="text-blue-600 underline font-medium hover:text-blue-700">
+              <div className="flex gap-2 items-center">
                 <FaGoogle /> Login with Google
               </div>
             </a>
