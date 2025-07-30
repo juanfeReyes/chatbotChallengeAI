@@ -8,17 +8,16 @@ import api from "~/services/axiosInterceptor";
 
 export default function Home() {
   const [items, setItems] = useState<any[]>([])
+  const location = useLocation();
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isChatOpen, setIsChatOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(location.state?.logged)
   const [cookies, setCookie, removeCookie] = useCookies(['jwtToken'])
   let navigate = useNavigate();
-  const location = useLocation();
 
  // Fetch products
   useEffect(() => {
-    location.state?.logged && setIsLoggedIn(true);
     api.get("/api/v1/products")
       .then(res => {
         setItems(res.data)
