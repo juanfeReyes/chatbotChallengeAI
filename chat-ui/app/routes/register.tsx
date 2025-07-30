@@ -21,7 +21,7 @@ const Register: React.FC = () => {
     // Add registration logic here
     
     await api.post("/api/v1/register", { username, password })
-    navigate('/login')
+    navigate('/')
   };
 
   const handleCancel = () => {
@@ -32,94 +32,64 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #e3f0ff 0%, #fffbe6 100%)', position: 'relative' }}>
-      <a href="/login" style={{ position: 'absolute', top: 24, left: 24, color: '#1976d2', textDecoration: 'underline', fontWeight: 500, fontSize: '1rem', zIndex: 2 }}>Go back</a>
-      <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ background: 'linear-gradient(135deg, #fffbe6 0%, #e3f0ff 100%)', borderRadius: '16px', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: '2.5rem 2rem', width: '100%', maxWidth: 350, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <h2 style={{ textAlign: 'center', color: '#1976d2', marginBottom: '2rem', fontWeight: 700, letterSpacing: 1 }}>Register</h2>
-          <form onSubmit={handleRegister} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-            <label style={{ fontWeight: 500, color: '#1976d2' }}>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50 relative">
+      <a href="/login" className="absolute top-6 left-6 text-blue-600 underline font-medium text-base z-10">Go back</a>
+      <div className="h-screen flex items-center justify-center">
+        <div className="bg-gradient-to-br from-yellow-50 to-blue-50 rounded-2xl shadow-lg p-10 w-full max-w-[350px] flex flex-col items-center">
+          <h2 className="text-center text-blue-600 mb-8 font-bold tracking-wide">Register</h2>
+          <form onSubmit={handleRegister} className="w-full flex flex-col gap-5">
+            <label className="font-medium text-blue-600">
               Username
               <input
                 type="text"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '0.7rem 0.7rem 0.7rem 0.2rem',
-                  marginTop: '0.5rem',
-                  borderRadius: '8px',
-                  border: '1px solid #b3d8ff',
-                  outline: 'none',
-                  fontSize: '1rem',
-                  background: '#f5faff',
-                  color: '#1976d2'
-                }}
+                className="w-full px-3 py-3 mt-2 rounded-lg border border-blue-200 outline-none text-base bg-blue-50 text-blue-600 focus:ring-2 focus:ring-blue-500"
               />
             </label>
-            <label style={{ fontWeight: 500, color: '#1976d2', position: 'relative' }}>
+            <label className="font-medium text-blue-600 relative">
               Password
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '0.7rem 0.7rem 0.7rem 0.2rem',
-                  marginTop: '0.5rem',
-                  borderRadius: '8px',
-                  border: '1px solid #b3d8ff',
-                  outline: 'none',
-                  fontSize: '1rem',
-                  background: '#f5faff',
-                  color: '#1976d2'
-                }}
+                className="w-full px-3 py-3 mt-2 rounded-lg border border-blue-200 outline-none text-base bg-blue-50 text-blue-600 focus:ring-2 focus:ring-blue-500"
               />
               <span
                 onClick={() => setShowPassword((v) => !v)}
-                style={{ position: 'absolute', right: 15, top: 45, cursor: 'pointer', color: '#1976d2', fontSize: '1.2rem' }}
+                className="absolute right-4 top-[45px] cursor-pointer text-blue-600 text-xl"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </label>
-            <label style={{ fontWeight: 500, color: '#1976d2', position: 'relative' }}>
+            <label className="font-medium text-blue-600 relative">
               Confirm Password
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '0.7rem 0.7rem 0.7rem 0.2rem',
-                  marginTop: '0.5rem',
-                  borderRadius: '8px',
-                  border: '1px solid #ffe066',
-                  outline: 'none',
-                  fontSize: '1rem',
-                  background: '#fffbe6',
-                  color: '#d4a200'
-                }}
+                className="w-full px-3 py-3 mt-2 rounded-lg border border-yellow-300 outline-none text-base bg-yellow-50 text-yellow-600 focus:ring-2 focus:ring-yellow-500"
               />
               <span
                 onClick={() => setShowConfirmPassword((v) => !v)}
-                style={{ position: 'absolute', right: 15, top: 45, cursor: 'pointer', color: '#d4a200', fontSize: '1.2rem' }}
+                className="absolute right-4 top-[45px] cursor-pointer text-yellow-600 text-xl"
                 aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
               >
                 {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </label>
             {error && (
-              <div style={{ color: '#d32f2f', fontWeight: 500, marginTop: '0.2rem', textAlign: 'left', width: '100%' }}>
+              <div className="text-red-600 font-medium mt-1 text-left w-full">
                 {error}
               </div>
             )}
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '0.5rem' }}>
-              <button type="submit" style={{ background: '#1976d2', color: '#fff', border: 'none', borderRadius: '8px', padding: '0.7rem 1.5rem', fontWeight: 600, cursor: 'pointer', boxShadow: '0 2px 8px rgba(25,118,210,0.08)' }}>Register</button>
-              <button type="button" onClick={handleCancel} style={{ background: '#fffbe6', color: '#d4a200', border: 'none', borderRadius: '8px', padding: '0.7rem 1.5rem', fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
+            <div className="flex gap-4 justify-center mt-2">
+              <button type="submit" className="bg-blue-600 text-white rounded-lg px-6 py-3 font-semibold cursor-pointer shadow-md shadow-blue-200 hover:bg-blue-700 transition-colors">Register</button>
+              <button type="button" onClick={handleCancel} className="bg-yellow-50 text-yellow-600 rounded-lg px-6 py-3 font-semibold cursor-pointer hover:bg-yellow-100 transition-colors">Cancel</button>
             </div>
           </form>
         </div>

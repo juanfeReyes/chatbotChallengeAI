@@ -1,4 +1,4 @@
-import {useState, type FC} from "react"
+import {useState, useRef, useEffect, type FC} from "react"
 import useLocalStorage from "../hook/useLocalStorage"
 import axios from "axios"
 
@@ -18,6 +18,17 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
   const [messages, setMessages] = useLocalStorage<Message[]>("chat-messages", [])
   const [inputMessage, setInputMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return
@@ -107,11 +118,11 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
                   {message.timestamp}
                 </span>
               </div>
+              <div ref={messagesEndRef} />
             </div>
           ))}
         </div>
 
-        {/* Input */}
         <div className='border-t p-4'>
           <div className='flex space-x-2'>
             <input
