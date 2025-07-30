@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react"
+import {useEffect, useState} from "react"
 import { useCookies } from "react-cookie";
-import {Link, useNavigate} from "react-router"
+import {Link, useLocation, useNavigate} from "react-router"
 import ProductItem from "~/components/productItem"
 import ChatModal from "~/components/chat"
 import api from "~/services/axiosInterceptor";
@@ -8,31 +8,15 @@ import api from "~/services/axiosInterceptor";
 
 export default function Home() {
   const [items, setItems] = useState<any[]>([])
+  const location = useLocation();
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isChatOpen, setIsChatOpen] = useState(false)
-  const [isValidToken, setIsValidToken] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(location.state?.logged)
   const [cookies, setCookie, removeCookie] = useCookies(['jwtToken'])
   let navigate = useNavigate();
 
-  // Verify token when component mounts or cookie changes
-  useEffect(() => {
-    if (cookies.jwtToken) {
-      api.get("/api/v1/verify-token")
-        .then(response => {
-          setIsValidToken(true);
-        })
-        .catch(error => {
-          console.error('Token verification failed:', error);
-          setIsValidToken(false);
-          removeCookie('jwtToken');
-        });
-    } else {
-      setIsValidToken(false);
-    }
-  }, [cookies.jwtToken, removeCookie]);
-
-  // Fetch products
+ // Fetch products
   useEffect(() => {
     api.get("/api/v1/products")
       .then(res => {
@@ -46,6 +30,7 @@ export default function Home() {
   }, [])
 
   const logout = () => {
+    setIsLoggedIn(false)
     removeCookie('jwtToken')
     navigate('/')
   }
@@ -56,7 +41,7 @@ export default function Home() {
         <span className="font-semibold text-xl text-amber-600 p-6">
           Beach Fashion
         </span>
-        {isValidToken ? (
+        {isLoggedIn ? (
           <button
             onClick={logout}
             className="bg-orange-400 text-black px-5 py-2 rounded-md font-medium text-base shadow-sm hover:bg-orange-500 transition-colors mr-4"
@@ -91,7 +76,7 @@ export default function Home() {
         </div>
       </div>
 
-      {isValidToken && (
+      {isLoggedIn && (
         <>
           <ChatModal
             isOpen={isChatOpen}

@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     await api.post("/api/v1/auth/login", { username, password })
-    navigate("/")
+    navigate("/", { state: { logged: true } });
   };
 
   const handleClear = () => {
