@@ -2,6 +2,7 @@ import express from 'express';
 const app = express();
 const PORT = process.env.CHATWS_PORT || 8080;
 import apiRouter from './src/infrastructure/api/apiRouter.js';
+import authRouter from './src/infrastructure/api/authRouter.js';
 import { VectorStore } from './src/application/rag/vectorStore.js'
 import cookieParser from 'cookie-parser';
 
@@ -24,6 +25,7 @@ app.use(express.static('assets'));
 
 // Routes
 app.use('/api/v1', apiRouter);
+app.use('/api/v1/auth', authRouter);
 const __dirname = process.cwd();
 app.use(express.static(__dirname + '/src/infrastructure/pages/client'));
 

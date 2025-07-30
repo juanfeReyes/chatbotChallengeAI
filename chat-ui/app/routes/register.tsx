@@ -20,8 +20,8 @@ const Register: React.FC = () => {
     }
     // Add registration logic here
     
-    await api.post("/api/v1/register", { username, password })
-    navigate('/')
+    await api.post("/api/v1/auth/register", { username, password })
+    navigate('/login')
   };
 
   const handleCancel = () => {

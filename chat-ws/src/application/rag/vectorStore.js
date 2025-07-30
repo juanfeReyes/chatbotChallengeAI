@@ -37,7 +37,7 @@ async function loadDocumentFromAssets(fileName) {
  * 
  * @param {*} document String representing the document to be split 
  */
-async function splitDocument(document) {
+export async function splitDocument(document) {
   const splitter = new RecursiveCharacterTextSplitter({
     chunkSize: 1000, // TODO: make configurable
     chunkOverlap: 200, // TODO: make configurable
@@ -46,7 +46,7 @@ async function splitDocument(document) {
   return await splitter.splitDocuments(document);
 }
 
-async function storeEmbeddings(splits) {
+export async function storeEmbeddings(splits) {
   const embeddingModel = await EmbeddingModel.getModel();
   return await MemoryVectorStore.fromDocuments(
     splits,

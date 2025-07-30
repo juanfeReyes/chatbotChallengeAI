@@ -1,6 +1,5 @@
 import { HumanMessage, ToolMessage, SystemMessage, AIMessage } from '@langchain/core/messages';
 import { StateGraph, MemorySaver, MessagesAnnotation, Annotation } from '@langchain/langgraph';
-import { pull } from 'langchain/hub';
 import { VectorStore } from './vectorStore.js';
 import { ChatModel } from '../../infrastructure/models/chatmodel.js';
 import { tool } from '@langchain/core/tools';
@@ -22,7 +21,7 @@ async function buildRagWorkflow() {
   },
     {
       name: "retrieve",
-      description: "Retrieve information related to a query.",
+      description: "Retrieve information related to outfit recommendation for the beach.",
       schema: retrieveSchema,
       responseFormat: "content_and_artifact",
       verbose: true
@@ -53,11 +52,10 @@ async function buildRagWorkflow() {
     // Format into prompt
     const docsContent = toolMessages.map((doc) => doc.content).join("\n");
     const systemMessageContent =
-      "You are an assistant for question-answering tasks. " +
-      "Use the following pieces of retrieved context to answer " +
-      "the question. If you don't know the answer, say that you " +
+      `You are a very polite fashion assistan for aswerin question regarding 
+      recommendations for going to the beach. If you don't know the answer, say that you " +
       "don't know. Use three sentences maximum and keep the " +
-      "answer concise." +
+      "answer concise.` +
       "\n\n" +
       `${docsContent}`;
 
@@ -71,26 +69,58 @@ async function buildRagWorkflow() {
       new SystemMessage(systemMessageContent),
       ...conversationMessages,
     ];
-  
+
     // Run
     const llm = await ChatModel.getModel()
     const response = await llm.invoke(prompt);
     return { messages: [response] };
   }
 
+  const saluteOrDontKnow = async (state) => {
+    const systemMessageContent =
+      `Please say Hi to the user if the user if greeting you else please say 
+      that you dont know and ask if you can help any other way`;
+    const humanMessages = state.messages.filter(msg => msg instanceof HumanMessage)
+    const lastHumanMessage = humanMessages[humanMessages.length - 1]
+    const prompt = [
+      new SystemMessage(systemMessageContent),
+      new HumanMessage(lastHumanMessage)
+    ];
+
+    // Run
+    const llm = await ChatModel.getModel()
+    const response = await llm.invoke(prompt);
+    return { messages: [response] };
+  }
+
+  function shouldContinue({ messages }) {
+  const lastMessage = messages[messages.length - 1] ;
+
+  // If the LLM makes a tool call, then we route to the "tools" node
+  if (lastMessage.tool_calls?.length) {
+    return "tools";
+  }
+  // Otherwise, we stop (reply to the user) using the special "__end__" node
+  return "saluteOrDontKnow";
+}
+
   const checkpointer = new MemorySaver();
   const graph = new StateGraph(MessagesAnnotation)
     .addNode("queryOrRespond", queryOrRespond)
     .addNode("tools", tools)
     .addNode("generate", generate)
+    .addNode("saluteOrDontKnow", saluteOrDontKnow)
     .addEdge("__start__", "queryOrRespond")
-    .addConditionalEdges("queryOrRespond", toolsCondition, {
-      __end__: "__end__",
-      tools: "tools",
-    })
+    .addConditionalEdges("queryOrRespond", shouldContinue)
+    // .addConditionalEdges("queryOrRespond", toolsCondition, {
+    //   saluteOrDontKnow: "saluteOrDontKnow",
+    //   tools: "tools",
+    //   __end__: "__end__"
+    // })
     .addEdge("tools", "generate")
     .addEdge("generate", "__end__")
-    .compile({checkpointer});
+    .addEdge("saluteOrDontKnow", "__end__")
+    .compile({ checkpointer });
 
   return graph;
 }
