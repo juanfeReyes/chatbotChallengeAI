@@ -47,10 +47,6 @@ export function authenticateJWT(req, res, next) {
   next();
 }
 
-authRouter.get('/verify-token', authenticateJWT, (req, res) => {
-  res.json({ valid: true });
-});
-
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || 'test';
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || 'test';
 const GOOGLE_CALLBACK_URL = process.env.GOOGLE_CALLBACK_URL || "http://localhost:8080/api/v1/auth/google/callback"
