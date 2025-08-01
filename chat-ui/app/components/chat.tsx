@@ -1,6 +1,7 @@
 import {useState, useRef, useEffect, type FC} from "react"
 import useLocalStorage from "../hook/useLocalStorage"
 import axios from "axios"
+import { LuBotMessageSquare } from "react-icons/lu"
 
 interface Message {
   id: string
@@ -75,11 +76,11 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
   if (!isOpen) return null
 
   return (
-    <div className='fixed bottom-4 right-4 z-50'>
+    <div className='fixed bottom-4 right-4 z-50 text-black'>
       <div className='bg-white rounded-lg shadow-xl w-[380px]'>
         {/* Header */}
         <div className='flex items-center justify-between p-4 border-b'>
-          <h2 className='text-xl font-semibold'>Chat Assistant</h2>
+          <h2 className='text-xl font-semibold flex items-center gap-2'><LuBotMessageSquare />Chat Assistant</h2>
           <button
             onClick={onClose}
             className='text-gray-500 hover:text-gray-700'>
@@ -110,7 +111,7 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
                     ? "bg-blue-500 text-white rounded-br-none"
                     : "bg-gray-200 text-gray-800 rounded-bl-none"
                 }`}>
-                <p className='text-sm'>{message.content}</p>
+                <p data-testid="message-content" className='text-sm'>{message.content}</p>
                 <span
                   className={`text-xs mt-1 block ${
                     message.isUser ? "text-blue-100" : "text-gray-500"
@@ -135,6 +136,7 @@ const ChatModal: FC<ChatModalProps> = ({isOpen, onClose}) => {
               className='flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50 disabled:text-gray-500'
             />
             <button
+              data-testid="send-btn"
               onClick={handleSendMessage}
               disabled={isLoading}
               className='bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed min-w-[80px] flex items-center justify-center'>

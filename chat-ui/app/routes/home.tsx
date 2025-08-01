@@ -4,6 +4,8 @@ import {Link, useLocation, useNavigate} from "react-router"
 import ProductItem from "~/components/productItem"
 import ChatModal from "~/components/chat"
 import api from "~/services/axiosInterceptor";
+import { FaStore } from "react-icons/fa";
+import { RiLoginCircleFill, RiLogoutCircleRFill } from "react-icons/ri";
 
 
 export default function Home() {
@@ -12,8 +14,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isChatOpen, setIsChatOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(location.state?.logged)
   const [cookies, setCookie, removeCookie] = useCookies(['jwtToken'])
+  const [isLoggedIn, setIsLoggedIn] = useState(location.state?.logged || !!cookies.jwtToken)
   let navigate = useNavigate();
 
  // Fetch products
@@ -39,27 +41,27 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
       <nav className="w-full bg-gradient-to-r from-yellow-50 to-yellow-100 flex items-center justify-between shadow-sm mb-8">
         <span className="font-semibold text-xl text-amber-600 p-6">
-          Beach Fashion
+          <FaStore /> Beach Fashion Store
         </span>
         {isLoggedIn ? (
           <button
             onClick={logout}
-            className="bg-orange-400 text-black px-5 py-2 rounded-md font-medium text-base shadow-sm hover:bg-orange-500 transition-colors mr-4"
+            className="flex items-center gap-2 bg-orange-400 text-black px-5 py-2 rounded-md font-medium text-base shadow-sm hover:bg-orange-500 transition-colors mr-4"
           >
-            Logout
+           <RiLogoutCircleRFill /> Logout
           </button>
         ) : (
           <Link
             to="/login"
-            className="bg-yellow-400 text-black px-5 py-2 rounded-md no-underline font-medium text-base shadow-sm hover:bg-yellow-500 transition-colors mr-4"
+            className="flex items-center bg-yellow-400 text-black px-5 py-2 rounded-md no-underline font-medium text-base shadow-sm hover:bg-yellow-500 transition-colors mr-4"
           >
-            Login
+            <RiLoginCircleFill />Login
           </Link>
         )}
       </nav>
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-10">
         <h2 className="text-gray-600 mb-6 text-center text-2xl">
-          Products
+          Latest Trends
         </h2>
         {loading && <p className="text-center">Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}
