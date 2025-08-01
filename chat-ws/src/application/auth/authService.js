@@ -1,8 +1,10 @@
+import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+
 const users = [];
-const jwt = require('jsonwebtoken');
 const SECRET = process.env.JWT_SECRET || 'supersecretkey';
 
-function registerUser(username, password) {
+export function registerUser(username, password) {
   if (users.find(u => u.username === username)) {
     return { error: 'User already exists' };
   }
@@ -10,24 +12,24 @@ function registerUser(username, password) {
   return { success: true };
 }
 
-function authenticateUser(username, password) {
-  const user = users.find(u => u.username === username && u.password === password);
-  if (!user) return null;
-  // Generate JWT
-  const token = jwt.sign({ username }, SECRET, { expiresIn: '1h' });
+export const generateToken = (username) => {
+  const chatToken = uuidv4();
+  const token = jwt.sign({ username, chatToken }, SECRET, { expiresIn: '1h' });
   return token;
 }
 
-function verifyToken(token) {
+export function authenticateUser(username, password) {
+  const user = users.find(u => u.username === username && u.password === password);
+  if (!user) return null;
+  // Generate JWT
+  const token = generateToken(username)
+  return token;
+}
+
+export function verifyToken(token) {
   try {
     return jwt.verify(token, SECRET);
   } catch (err) {
     return null;
   }
 }
-
-module.exports = {
-  registerUser,
-  authenticateUser,
-  verifyToken
-};

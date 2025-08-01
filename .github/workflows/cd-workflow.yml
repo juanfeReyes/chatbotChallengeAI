@@ -1,13 +1,47 @@
 name: CD to Azure Web App
 
-# on:
-#   push:
-#     branches:
-#       - main
+name: Build and deploy Node.js app to Azure Web App - chatwsappserviceg6
 
-on: [push]
-
+on: 
+  push:
+    branches:
+      - 'feat/dockerization-cd'
+  
 jobs:
+  build-ws:
+    name: "Build Web Server"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read #This is required for actions/checkout
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+      
+      - name: npm install, build, and test ui
+        working-directory: './chat-ui'
+        run: |
+          npm install
+          npm run build --if-present
+          npm run test --if-present
+
+      - name: npm install, build, and test ws
+        working-directory: './chat-ws'
+        run: |
+          npm install
+          npm run build --if-present
+          npm run test --if-present
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-app
+          path: .
+
   build-and-deploy:
     runs-on: ubuntu-latest
     defaults:
@@ -28,9 +62,23 @@ jobs:
         run: |
           docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/chat-ws:latest .
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/chat-ws:latest
-      - name: Deploy to Azure Web App
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-ws
+    
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: node-app
+      
+      - name: 'Deploy to Azure Web App'
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: ${{ secrets.ACR_LOGIN_SERVER }}/chat-ws:latest
+          app-name: 'chatwsappserviceg6'
+          slot-name: 'Production'
+          package: './chat-ws'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_10E2DB9116264408928A3EA015FD33BB }}
+          

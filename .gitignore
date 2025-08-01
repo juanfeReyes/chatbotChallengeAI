@@ -1,2 +1,8 @@
 */node_modules
 .DS_Store
+
+*/.env
+
+*/coverage/
+**/infrastructure/pages/client/
+**/build/client/
