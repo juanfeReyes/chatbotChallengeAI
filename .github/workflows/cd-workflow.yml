@@ -1,11 +1,9 @@
 name: CD to Azure Web App
 
-name: Build and deploy Node.js app to Azure Web App - chatwsappserviceg6
-
 on: 
   push:
     branches:
-      - 'feat/dockerization-cd'
+      - 'main'
   
 jobs:
   build-ws:
@@ -42,11 +40,9 @@ jobs:
           name: node-app
           path: .
 
-  build-and-deploy:
+  containerize:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./chat-ws
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

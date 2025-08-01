@@ -28,7 +28,7 @@ To build and run this project in a Docker container and expose it on local port 
    ```
 2. **Run the Docker container, mapping port 80:80**
    ```bash
-   docker run -p 80:80 chat-ws
+   docker run --env-file ./chat-ws/.env -p "8080:8080" chat-ws
    ```
 3. **Access the app:**
    Open [http://localhost](http://localhost) in your browser.
